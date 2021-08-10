@@ -18,9 +18,9 @@ app.get('/', function (req, res) {
 // });
 
 module.exports = function (bot) {
-//   console.log(process.env.BOT_TOKEN)
-//   app.post(`/${process.env.BOT_TOKEN}`, (req, res) => {
-//     bot.processUpdate(req.body);
-//     res.status(200).json({ message: 'ok' });
-// });
+  console.log(process.env.BOT_TOKEN)
+  app.post(`/${process.env.BOT_TOKEN}`, (req, res) => {
+    bot.processUpdate(req.body);
+    res.status(200).json({ message: 'ok' });
+});
 };
