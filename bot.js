@@ -151,15 +151,7 @@ function createPolls(ctx, param) {
     
 }
 
-if(process.env.NODE_ENV == 'production')
-bot.launch({
-    webhook: {
-      domain: process.env.HEROKU_URL,
-      port: process.env.PORT
-    }
-  }).then(() => console.log("Bot Started!"))
-else
-    bot.launch().then(() => console.log("Bot Started!"))
+
     
 //bot.start(ctx => ctx.reply('hi'));
 //.catch((e) => console.error("Uh oh, bot didn't start: ", e.toString()));
