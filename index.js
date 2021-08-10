@@ -158,14 +158,14 @@ const expressApp = express()
 
 //expressApp.use(bot.webhookCallback("/bot"));
 console.log(`${process.env.HEROKU_URL}/bot`)
-//bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot`);
-bot.launch()
-expressApp.get("/", (req, res) => {
-  res.send("Our new tab!!");
-});
 
-expressApp.listen(process.env.PORT, "0.0.0.0", () => {
-  console.log(`Listen in the port ${process.env.PORT}`);
-});
+
+bot.launch({
+    webhook: {
+      domain: process.env.HEROKU_URL,
+      hookPath: '/bot',
+      port: process.env.PORT
+    }
+  });
 
 
