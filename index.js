@@ -157,6 +157,7 @@ const express = require('express')
 const expressApp = express()
 
 expressApp.use(bot.webhookCallback("/bot"));
+console.log(`${process.env.HEROKU_URL}/bot`)
 bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot`);
 
 expressApp.get("/", (req, res) => {
