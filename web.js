@@ -13,7 +13,6 @@ app.get('/', function (req, res) {
 var server = app.listen(process.env.PORT, function () {
   var host = server.address().address;
   var port = server.address().port;
-  console.log(process.env.BOT_TOKEN)
   console.log(host)
   console.log('Web server started at http://%s:%s', host, port);
 });
