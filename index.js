@@ -156,9 +156,9 @@ function createPolls(ctx, param) {
 const express = require('express')
 const expressApp = express()
 
-expressApp.use(bot.webhookCallback("/bot"));
+//expressApp.use(bot.webhookCallback("/bot"));
 console.log(`${process.env.HEROKU_URL}/bot`)
-bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot`);
+//bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot`);
 bot.launch()
 expressApp.get("/", (req, res) => {
   res.send("Our new tab!!");
