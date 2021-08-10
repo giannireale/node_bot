@@ -11,150 +11,7 @@ const bot = new Telegraf(token);
 //const bot = new Composer()
 //const bot = new TelegramBot(token)
 bot.command("start", (msg) => msg.reply(`Hello ${msg.from.username}`));
-bot.on('message', (ctx) => {
-    // Explicit usage
-    console.log("start");
-    // Using context shortcut
-    if(ctx.message.text != null && ctx.message.text.startsWith("/start")) {
-        param = null;
-        if(ctx.message.text.includes(" ")) {
-            p = ctx.message.text.split(" ");
-            param = p[1];
-        }
-        createPolls(ctx, param);
-        forLoop(ctx)
-        
-    }
 
-})
-
-const forLoop = async ctx => {
-    console.log("Start");
-    
-    for (let index = 0; index < pools.length; index++) {
-        const pool = pools[index];
-        await sendPoll(ctx, pool);
-    }
-    
-   console.log("End");
-   };
-
-   const sleep = ms => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-   };
-   
-   const sendPoll = (ctx, element) => {
-    //return sleep(400).then(v => ctx.telegram.sendQuiz(element.chat_id, element.question, element.options, {correct_option_id:element.correct_option_id}));
-    return sleep(400).then(v => ctx.sendPoll(element.chat_id, element.question, element.options, {correct_option_id:element.correct_option_id, type:'quiz'}));
-   };
-
-
-function rollWb(ctx, wb, j) {
-    sheet = wb[j].data;
-    
-    row = null;
-    cell = null;
-    rows = sheet.length;
-    cols = 6; // No of columns
-    tmp = 0;
-
-    pools = [];
-    for(r = 0; r < rows; r++) {
-        options = [];
-       
-        correctOptionId = 0;
-        question =  "test";
-        
-        row = sheet[r];
-        
-        if(r == 0 ) continue;
-        
-        if(row != null) {
-            
-            for(c = 0; c < cols; c++) {
-                cell = row[c];
-                if(cell != null) {
-                    
-                    switch (c) {
-                    case 0:
-                        value = cell;
-                        
-                        if(value != null && ((value >=1 &&
-                                value <=	57) ||
-                                (value >=167 &&
-                                value <=	265)||
-                                (value >=398 &&
-                                value <=	474)||
-                                (value >=606 &&
-                                value <=	688)
-                                )) {
-                            correctOptionId = 0
-                        } else if(value != null && (( value >=58 &&
-                                value <=	109) ||
-                                (value >=266 &&
-                                value <=	320)||
-                                (value >=475 &&
-                                value <=	543)||
-                                (value >=689 &&
-                                value <=	755))) {
-                            correctOptionId = 1
-                        } else if(value != null && ((value >=110 &&
-                                value <=	170)||
-                                (value >=321 &&
-                                value <=	397)||
-                                (value >=544 &&
-                                value <=	605)||
-                                (value >=756 &&
-                                value <=	837))) {
-                            correctOptionId = 2
-                        }
-                        break;
-                    case 2:
-                        question = "#" + randomCount + " - " + cell.substring(0, cell.length > 100 ? 99 : cell.length);
-                        break;
-                    case 3:
-                        options.push(cell.substring(0, cell.length > 100 ? 99 : cell.length));
-                        break;
-                    case 4:
-                        options.push(cell.substring(0, cell.length > 100 ? 99 : cell.length));
-                        break;
-                    case 5:
-                        options.push(cell.substring(0, cell.length > 100 ? 99 : cell.length));
-                        break;
-
-                    default:
-                        break;
-                    }
-                    
-                    
-                }
-            }
-        }
-        if(r > 0 ) {
-            let obj = {};
-            Object.assign(obj, {chat_id:ctx.message.chat.id, question : question, options : options, correct_option_id : correctOptionId });
-            pools.push(obj);
-            randomCount++;
-        }
-    }
-}
-
-function createPolls(ctx, param) {
-    try {
-        const wb = xlsx.parse(`${__dirname}/q.xlsx`);
-        j = param != null ? param-1 : Math.floor(Math.random() * 8);
-        rollWb(ctx, wb, j);
-        randomCount = 1;  
-    } catch(ioe) {
-       console.log(ioe)
-    }
-    
-}
-
-//bot.startPolling();
-
-const express = require('express')
-const expressApp = express()
 
 //expressApp.use(bot.webhookCallback("/bot"));
 console.log(`${process.env.HEROKU_URL}/bot`)
@@ -163,9 +20,10 @@ console.log(`${process.env.HEROKU_URL}/bot`)
 bot.launch({
     webhook: {
       domain: process.env.HEROKU_URL,
-      hookPath: '/bot',
+      hookPath: `/bot`,
       port: process.env.PORT
     }
   });
 
 
+module.exports = bot
