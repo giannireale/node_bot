@@ -10,6 +10,7 @@ var token = process.env.BOT_TOKEN;
 let bot = null;
 if(process.env.NODE_ENV === 'production') {
     bot = new TelegramBot(token);
+    console.log(process.env.HEROKU_URL);
     bot.setWebHook(process.env.HEROKU_URL + bot.token);
   }
   else {
