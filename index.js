@@ -1,7 +1,7 @@
 
-
+require('dotenv').config()
 //const { Telegraf } = require('telegraf')
-const { Composer } = require('micro-bot')
+const { Composer, session } = require('micro-bot')
 const xlsx  = require ('node-xlsx');
 randomCount = 1;
 pools = [];
@@ -14,7 +14,7 @@ bot.command('quit', (ctx) => {
     // Using context shortcut
     ctx.leaveChat()
 })
-
+bot.use(session())
 bot.on('message', (ctx) => {
     // Explicit usage
     console.log("start");
@@ -159,5 +159,5 @@ function createPolls(ctx, param) {
 bot.start(ctx => console.log("Bot Started!"));
 //.catch((e) => console.error("Uh oh, bot didn't start: ", e.toString()));
 module.exports = bot
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+//process.once('SIGINT', () => bot.stop('SIGINT'))
+//process.once('SIGTERM', () => bot.stop('SIGTERM'))

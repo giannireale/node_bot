@@ -9,3 +9,6 @@
       { "src": "/(.*)", "dest": "/index.js" }
     ]
   }
+
+  heroku config:set --app glacial-island-40235 BOT_TOKEN='1777018787:AAFTMxLFi_cQcS4lNDIZ6WqhEV_P5O87obo'
+heroku config:set --app glacial-island-40235 BOT_DOMAIN='https://glacial-island-40235.herokuapp.com'
