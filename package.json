@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/giannireale/node_bot#readme",
   "dependencies": {
+    "node-xlsx": "^0.17.1",
     "telegraf": "^4.4.1"
   }
 }
