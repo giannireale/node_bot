@@ -150,9 +150,15 @@ function createPolls(ctx, param) {
     
 }
 
-const API_TOKEN = process.env.BOT_TOKEN || '';
-const PORT = process.env.PORT || 3000;
-const BOT_DOMAIN = process.env.BOT_DOMAIN || 'https://your-heroku-app.herokuapp.com';
+const express = require('express')
+const expressApp = express()
 
-bot.telegram.setWebhook(`${BOT_DOMAIN}/bot${API_TOKEN}`);
-bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
+const port = process.env.PORT || 3000
+expressApp.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+expressApp.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+})
+
+bot.startPolling()
