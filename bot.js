@@ -1,34 +1,16 @@
 
 require('dotenv').config()
-//const { Telegraf } = require('telegraf')
+const { Telegraf } = require('telegraf')
 //const { Composer, session } = require('micro-bot')
-const TelegramBot = require('node-telegram-bot-api');
+//const TelegramBot = require('node-telegram-bot-api');
 const xlsx  = require ('node-xlsx');
 randomCount = 1;
 pools = [];
-var token = process.env.BOT_TOKEN;
-let bot = null;
-const options = {
-    webHook: {
-      // Port to which you should bind is assigned to $PORT variable
-      // See: https://devcenter.heroku.com/articles/dynos#local-environment-variables
-      port: process.env.PORT
-      // you do NOT need to set up certificates since Heroku provides
-      // the SSL certs already (https://<app-name>.herokuapp.com)
-      // Also no need to pass IP because on Heroku you need to bind to 0.0.0.0
-    }
-  };
-if(process.env.NODE_ENV === 'production') {
-    bot = new TelegramBot(token, options);
-    console.log(process.env.HEROKU_URL);
-    //bot.setWebHook(process.env.HEROKU_URL + bot.token);
-  }
-  else {
-    bot = new TelegramBot(token, { polling: true });
-  }
-
-//const bot = new Telegraf('1777018787:AAFTMxLFi_cQcS4lNDIZ6WqhEV_P5O87obo');
+const token = '1777018787:AAFTMxLFi_cQcS4lNDIZ6WqhEV_P5O87obo';
+const bot = new Telegraf(token);
 //const bot = new Composer()
+//const bot = new TelegramBot(token)
+
 bot.on('message', (ctx) => {
     // Explicit usage
     console.log("start");
@@ -169,9 +151,18 @@ function createPolls(ctx, param) {
     
 }
 
-module.exports = bot;
-//bot.launch().then(() => console.log("Bot Started!"))
+if(process.env.NODE_ENV == 'production')
+bot.launch({
+    webhook: {
+      domain: process.env.HEROKU_URL,
+      port: process.env.PORT
+    }
+  }).then(() => console.log("Bot Started!"))
+else
+    bot.launch().then(() => console.log("Bot Started!"))
+    
 //bot.start(ctx => ctx.reply('hi'));
 //.catch((e) => console.error("Uh oh, bot didn't start: ", e.toString()));
+module.exports = bot
 //process.once('SIGINT', () => bot.stop('SIGINT'))
 //process.once('SIGTERM', () => bot.stop('SIGTERM'))
