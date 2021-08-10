@@ -8,15 +8,18 @@ randomCount = 1;
 pools = [];
 var token = process.env.BOT_TOKEN;
 let bot = null;
+const options = {
+    webHook: {
+      // Port to which you should bind is assigned to $PORT variable
+      // See: https://devcenter.heroku.com/articles/dynos#local-environment-variables
+      port: process.env.PORT
+      // you do NOT need to set up certificates since Heroku provides
+      // the SSL certs already (https://<app-name>.herokuapp.com)
+      // Also no need to pass IP because on Heroku you need to bind to 0.0.0.0
+    }
+  };
 if(process.env.NODE_ENV === 'production') {
-    bot = new TelegramBot(token, {webHook: {
-        // Port to which you should bind is assigned to $PORT variable
-        // See: https://devcenter.heroku.com/articles/dynos#local-environment-variables
-        port: process.env.PORT
-        // you do NOT need to set up certificates since Heroku provides
-        // the SSL certs already (https://<app-name>.herokuapp.com)
-        // Also no need to pass IP because on Heroku you need to bind to 0.0.0.0
-      }});
+    bot = new TelegramBot(token, options);
     console.log(process.env.HEROKU_URL);
     bot.setWebHook(process.env.HEROKU_URL + bot.token);
   }
