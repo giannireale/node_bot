@@ -10,7 +10,7 @@ const bot = new Telegraf(token);
 
 //const bot = new Composer()
 //const bot = new TelegramBot(token)
-
+bot.command("start", (msg) => msg.reply(`Hello ${msg.from.username}`));
 bot.on('message', (ctx) => {
     // Explicit usage
     console.log("start");
@@ -150,6 +150,8 @@ function createPolls(ctx, param) {
     }
     
 }
+
+//bot.startPolling();
 
 const express = require('express')
 const expressApp = express()
