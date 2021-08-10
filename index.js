@@ -156,7 +156,7 @@ function createPolls(ctx, param) {
 
 
 //bot.launch().then(() => console.log("Bot Started!"))
-bot.start(ctx => console.log("Bot Started!"));
+bot.start(ctx => ctx.reply('hi'));
 //.catch((e) => console.error("Uh oh, bot didn't start: ", e.toString()));
 module.exports = bot
 //process.once('SIGINT', () => bot.stop('SIGINT'))
