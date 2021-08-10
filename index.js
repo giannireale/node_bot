@@ -1,10 +1,12 @@
 
 
-const { Telegraf } = require('telegraf')
+//const { Telegraf } = require('telegraf')
+const { Composer } = require('micro-bot')
 const xlsx  = require ('node-xlsx');
 randomCount = 1;
 pools = [];
-const bot = new Telegraf('1777018787:AAFTMxLFi_cQcS4lNDIZ6WqhEV_P5O87obo');
+//const bot = new Telegraf('1777018787:AAFTMxLFi_cQcS4lNDIZ6WqhEV_P5O87obo');
+const bot = new Composer()
 bot.command('quit', (ctx) => {
     // Explicit usage
     ctx.telegram.leaveChat(ctx.message.chat.id)
@@ -153,8 +155,9 @@ function createPolls(ctx, param) {
 }
 
 
-bot.launch().then(() => console.log("Bot Started!"))
-.catch((e) => console.error("Uh oh, bot didn't start: ", e.toString()));
-
+//bot.launch().then(() => console.log("Bot Started!"))
+bot.start(ctx => console.log("Bot Started!"));
+//.catch((e) => console.error("Uh oh, bot didn't start: ", e.toString()));
+module.exports = bot
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
