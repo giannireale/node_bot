@@ -159,7 +159,7 @@ const expressApp = express()
 expressApp.use(bot.webhookCallback("/bot"));
 console.log(`${process.env.HEROKU_URL}/bot`)
 bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot`);
-
+bot.launch()
 expressApp.get("/", (req, res) => {
   res.send("Our new tab!!");
 });
