@@ -7,6 +7,7 @@ randomCount = 1;
 pools = [];
 const token = '1777018787:AAFTMxLFi_cQcS4lNDIZ6WqhEV_P5O87obo';
 const bot = new Telegraf(token);
+
 //const bot = new Composer()
 //const bot = new TelegramBot(token)
 
@@ -153,12 +154,15 @@ function createPolls(ctx, param) {
 const express = require('express')
 const expressApp = express()
 
-const port = process.env.PORT || 3000
-expressApp.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-expressApp.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
+expressApp.use(bot.webhookCallback("/bot"));
+bot.telegram.setWebhook(`${process.env.HEROKU_URL}/bot`);
 
-bot.startPolling()
+expressApp.get("/", (req, res) => {
+  res.send("Our new tab!!");
+});
+
+expressApp.listen(process.env.PORT, "0.0.0.0", () => {
+  console.log(`Listen in the port ${process.env.PORT}`);
+});
+
+
